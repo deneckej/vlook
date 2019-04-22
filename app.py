@@ -1,18 +1,13 @@
 # 041819 - Vlookup for Salesforce 18 Character ID
-import os
-import time
-import shutil
 import glob as gb
 import pandas as pd
 import tkinter as tk
 import datetime as dt
+import os, time, shutil
 import webbrowser as wb
 from tkinter.font import Font
 from tkinter import filedialog
 from tkinter.filedialog import askopenfilename
-
-height = 400
-width = 500
 
 user_name = "smk"
 dl_dir   = '/Users/' + user_name + '/Downloads/'
@@ -30,6 +25,9 @@ def drop_y(df):
     to_drop = [x for x in df if x.endswith('_y')]
     df.drop(to_drop, axis=1, inplace=True)
 
+
+height = 400
+width = 500
 
 root = tk.Tk()
 canvas = tk.Canvas(root, height=height, width=width)
@@ -88,7 +86,9 @@ if how_old <= 1:
     df = pd.read_excel(filePath.get())
     df2 = pd.read_excel(latest_file)
 
-    vlook = df.merge(df2, on='uID', how='left')
+    key_headers = df.columns.values.tolist()
+
+    vlook = df.merge(df2, on=key_headers[0], how='left')
     drop_y(vlook)
     date_created = time.strftime("%m.%d.%Y_%H:%M:%S")
     vlook.to_csv('python_vlook_' + date_created + '.csv', sep=',', index=False)
@@ -101,7 +101,7 @@ if how_old <= 1:
     try:
         os.remove(find_csv)
         print("🔥🔥🔥🔥🔥🔥 SUCCESS! 🔥🔥🔥🔥🔥🔥")
-        time.sleep(3)
+        time.sleep(1)
         wb.open(goog_url + '1V4waIWHHAtF2kIXQ-J8a6zbv1flfp8DI', new=2, autoraise=False)
     except OSError as e:
        print ("Error: %s - %s." % (e.filename, e.strerror)) 
@@ -119,6 +119,7 @@ else:
 #    workbooks.
 # 3) add a way to get the name of the first column in the first workbook and use that
 #    as the uID to match on.
+# 4) Investigate the use of a class for the GUI
 
 ### Misc
 
