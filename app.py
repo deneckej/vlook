@@ -14,9 +14,10 @@ from tkinter.filedialog import askopenfilename
 height = 400
 width = 500
 
-dl_dir   = '/Users/smk/Downloads/'
-root_dir = '/Users/smk/Desktop/vlookup/'
-dest_dir = '/Users/smk/Google Drive/vlook/'
+user_name = "smk"
+dl_dir   = '/Users/' + user_name + '/Downloads/'
+root_dir = '/Users/' + user_name + '/Desktop/vlookup/'
+dest_dir = '/Users/' + user_name + '/Google Drive/vlook/'
 goog_url = 'https://drive.google.com/drive/folders/'
 
 
