@@ -10,9 +10,9 @@ from tkinter import filedialog
 from tkinter.filedialog import askopenfilename
 
 #Replace "smk" with your user. Then check directory paths.
-user_path = "/Users/smk"
+user_path = '/Users/smk'
 dl_dir   = user_path + '/Downloads/'
-root_dir = user_path + '/Desktop/vlookup/'
+root_dir = user_path + '/Library/Mobile Documents/com~apple~CloudDocs/git_projects/vlook/'
 dest_dir = user_path + '/Google Drive/vlook/'
 goog_url = 'https://drive.google.com/drive/folders/'
 
