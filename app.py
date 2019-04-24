@@ -9,6 +9,7 @@ from tkinter.font import Font
 from tkinter import filedialog
 from tkinter.filedialog import askopenfilename
 
+#Replace "smk" with your user. Then check directory paths.
 user_path = "/Users/smk"
 dl_dir   = user_path + '/Downloads/'
 root_dir = user_path + '/Desktop/vlookup/'
@@ -25,7 +26,7 @@ def drop_y(df):
     to_drop = [x for x in df if x.endswith('_y')]
     df.drop(to_drop, axis=1, inplace=True)
 
-
+#Tkinter Variables
 height = 400
 width = 500
 
@@ -60,6 +61,7 @@ else:
 drop_entry_options = ['left','right','outer','inner']
 drop_entry = tk.StringVar()
 
+#Tkinter Frame Objects
 drop_subheader = tk.Label(frame, bg='#88c1ff', font=headerFont, text="Select your join:")
 drop_subheader.place(relx=-0.21, rely=0.17, relwidth=0.8, relheight=0.1)
 
@@ -86,7 +88,7 @@ submit.place(relx=0.51, rely=0.84, relwidth=0.3, relheight=0.088)
 
 root.mainloop()
 
-
+#*.xlsx merge
 if how_old <= 1:
 
     df = pd.read_excel(filePath.get())
