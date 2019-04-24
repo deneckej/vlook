@@ -9,10 +9,10 @@ from tkinter.font import Font
 from tkinter import filedialog
 from tkinter.filedialog import askopenfilename
 
-user_name = "smk"
-dl_dir   = '/Users/' + user_name + '/Downloads/'
-root_dir = '/Users/' + user_name + '/Desktop/vlookup/'
-dest_dir = '/Users/' + user_name + '/Google Drive/vlook/'
+user_path = "/Users/smk"
+dl_dir   = user_path + '/Downloads/'
+root_dir = user_path + '/Desktop/vlookup/'
+dest_dir = user_path + '/Google Drive/vlook/'
 goog_url = 'https://drive.google.com/drive/folders/'
 
 
@@ -55,28 +55,34 @@ if how_old <= 1:
     files = gb.glob(dl_dir + '*.xlsx')
     latest_file = max(files, key=os.path.getctime)
 else:
-    latest_file = "No Recent File"
+    latest_file = "No recent *.xlsx file in your downloads folder"
 
-title = tk.Label(frame, text="16:21", bg='#ffffff')
-title.place(relx=0, rely=0, relwidth=1, relheight=0.11)
+drop_entry_options = ['left','right','outer','inner']
+drop_entry = tk.StringVar()
+
+drop_subheader = tk.Label(frame, bg='#88c1ff', font=headerFont, text="Select your join:")
+drop_subheader.place(relx=-0.21, rely=0.17, relwidth=0.8, relheight=0.1)
+
+drop_down = tk.OptionMenu(frame, drop_entry, *drop_entry_options)
+drop_down.place(relx=0.1, rely=0.25, relwidth=0.8, relheight=0.1)
 
 file1_subheader = tk.Label(frame, bg='#88c1ff', font=headerFont, text="Latest spreadsheet in Downloads:")
-file1_subheader.place(relx=-0.11, rely=0.27, relwidth=0.8, relheight=0.1)
+file1_subheader.place(relx=-0.11, rely=0.42, relwidth=0.8, relheight=0.1)
 
 file1 = tk.Label(frame, bg='#ffffff', text=latest_file)
-file1.place(relx=0.1, rely=0.35, relwidth=0.8, relheight=0.1)
+file1.place(relx=0.1, rely=0.50, relwidth=0.8, relheight=0.1)
 
 file2_subheader = tk.Label(frame, bg='#88c1ff', font=headerFont, text="Select a spreadsheet:")
-file2_subheader.place(relx=-0.18, rely=0.47, relwidth=0.8, relheight=0.1)
+file2_subheader.place(relx=-0.18, rely=0.62, relwidth=0.8, relheight=0.1)
 
 file2 = tk.Entry(frame, bg='#ffffff', textvariable=filePath)
-file2.place(relx=0.1, rely=0.55, relwidth=0.8, relheight=0.1)
+file2.place(relx=0.1, rely=0.70, relwidth=0.8, relheight=0.1)
 
 button = tk.Button(frame, text="Select a file", bg='#333333', command=lambda: getFolderPath(file2.get()))
-button.place(relx=0.35, rely=0.72, relwidth=0.3, relheight=0.1)
+button.place(relx=0.19, rely=0.84, relwidth=0.3, relheight=0.088)
 
 submit = tk.Button(frame, text="Submit", bg='#333333', command = root.destroy)
-submit.place(relx=0.35, rely=0.85, relwidth=0.3, relheight=0.1)
+submit.place(relx=0.51, rely=0.84, relwidth=0.3, relheight=0.088)
 
 root.mainloop()
 
@@ -88,7 +94,7 @@ if how_old <= 1:
 
     key_headers = df.columns.values.tolist()
 
-    vlook = df.merge(df2, on=key_headers[0], how='left')
+    vlook = df.merge(df2, on=key_headers[0], how=drop_entry)
     drop_y(vlook)
     date_created = time.strftime("%m.%d.%Y_%H:%M:%S")
     vlook.to_csv('python_vlook_' + date_created + '.csv', sep=',', index=False)
@@ -114,10 +120,11 @@ else:
 
 ## Imporvements
 
+# 0) add a refresh button to update the most recent file
 # 1) add settings for type of "Join"
 # 2) add setting to ask if if you have one file w/ two sheets or two 
 #    workbooks.
-# 3) add a way to get the name of the first column in the first workbook and use that
+# 3) DONE: add a way to get the name of the first column in the first workbook and use that
 #    as the uID to match on.
 # 4) Investigate the use of a class for the GUI
 
